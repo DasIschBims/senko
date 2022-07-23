@@ -1,8 +1,6 @@
 import { Event } from "../structures/Event";
 import { client } from "../index";
 import mongoose from "mongoose";
-import express from "express";
-import bodyParser from "body-parser";
 
 export default new Event("ready", async () => {
     console.log("Logged in as:", client.user?.tag);
@@ -21,16 +19,6 @@ export default new Event("ready", async () => {
 
         client.user?.setActivity(`${activity.message}`, { type: activity.type });
     }, 10000);
-
-    // Setup express js to handle requests
-    const app = express();
-    const port = process.env.PORT || 6969;
-    app.use(bodyParser.json());
-
-    const botInfo = require("../routes/botinfo");
-    app.use("/senko/api/info", botInfo);
-
-    app.listen(port, () => console.log(`Listening on port ${port}`));
 
 
     // Connect to MongoDB

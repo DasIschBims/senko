@@ -4,6 +4,9 @@ import glob from "glob";
 import { promisify } from "util";
 import { RegisterCommandsOptions } from "../typings/Client";
 import { Event } from "./Event";
+import express from "express";
+import bodyParser from "body-parser";
+import botInfo from "../routes/botInfo";
 
 const globPromise = promisify(glob);
 
@@ -15,9 +18,19 @@ export class ExtendedClient extends Client {
         super({ intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"] });
     }
 
-    start() {
+    async start() {
         this.registerModules();
         this.login(process.env.botToken);
+        this.express();
+    }
+
+    async express() {
+        const app = express();
+        const port = process.env.PORT || 6969;
+        app.use(bodyParser.json());
+        app.use("/senko/api/info", botInfo);
+
+        app.listen(port, () => console.log(`Express is now listening on port ${port}`));
     }
 
     async importFile(filePath: string) {
