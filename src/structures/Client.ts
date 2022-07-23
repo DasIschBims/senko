@@ -1,4 +1,4 @@
-import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection } from "discord.js";
+import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, GatewayIntentBits, Partials } from "discord.js";
 import { CommandType } from "../typings/Command";
 import glob from "glob";
 import { promisify } from "util";
@@ -7,6 +7,7 @@ import { Event } from "./Event";
 import express from "express";
 import bodyParser from "body-parser";
 import botInfo from "../routes/botInfo";
+import mongoose from "mongoose";
 
 const globPromise = promisify(glob);
 
@@ -15,22 +16,33 @@ export class ExtendedClient extends Client {
     buttons: Collection<any, any>;
 
     constructor() {
-        super({ intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"] });
+        super({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages], partials: [Partials.Message, Partials.User, Partials.GuildMember] });
     }
 
     async start() {
         this.registerModules();
-        this.login(process.env.botToken);
         this.express();
+        this.mongodb();
+        this.login(process.env.botToken);
     }
 
-    async express() {
+    express() {
         const app = express();
-        const port = process.env.PORT || 6969;
+        const port = 8000;
         app.use(bodyParser.json());
         app.use("/senko/api/info", botInfo);
 
         app.listen(port, () => console.log(`Express is now listening on port ${port}`));
+    }
+
+    async mongodb() {
+        await mongoose.connect(process.env.mongodbUri, {
+            keepAlive: true,
+        }).then(() => {
+            console.log("Connected to MongoDB");
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     async importFile(filePath: string) {

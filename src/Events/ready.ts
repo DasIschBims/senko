@@ -1,6 +1,5 @@
 import { Event } from "../structures/Event";
 import { client } from "../index";
-import mongoose from "mongoose";
 
 export default new Event("ready", async () => {
     console.log("Logged in as:", client.user?.tag);
@@ -19,14 +18,4 @@ export default new Event("ready", async () => {
 
         client.user?.setActivity(`${activity.message}`, { type: activity.type });
     }, 10000);
-
-
-    // Connect to MongoDB
-    await mongoose.connect(process.env.mongodbUri, {
-        keepAlive: true,
-    }).then(() => {
-        console.log("Connected to MongoDB");
-    }).catch((err) => {
-        console.log(err);
-    });
 });

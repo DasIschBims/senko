@@ -1,8 +1,8 @@
 require("dotenv").config();
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { ExtendedClient } from "./structures/Client";
 
-const errorEmbed = new MessageEmbed()
+const errorEmbed = new EmbedBuilder()
 .setColor("#635291")
 .setTimestamp()
 .addFields([

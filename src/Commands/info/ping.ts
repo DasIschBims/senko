@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { Command } from "../../structures/Command";
 
 export default new Command({
@@ -6,7 +6,7 @@ export default new Command({
     description: "Displays the bot's latency",
     run: async ({ interaction }) => {
         interaction.followUp({ embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
             .setColor(`#${process.env.embedColor}`)
             .setTimestamp()
             .addFields([

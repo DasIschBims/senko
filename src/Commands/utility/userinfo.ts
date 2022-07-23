@@ -1,6 +1,5 @@
-import { MessageEmbed, Options } from "discord.js";
+import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import { Command } from "../../structures/Command";
-import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
 import { client } from "../..";
 
 export default new Command({
@@ -10,7 +9,7 @@ export default new Command({
         {
             name: "user",
             description: "The user to get information about",
-            type: ApplicationCommandOptionTypes.USER,
+            type: ApplicationCommandOptionType.User,
             required: false,
         }
     ],
@@ -25,12 +24,12 @@ export default new Command({
         var userNickname = client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).nickname;
         var userCreatedAt = `<t:${Math.round(selected.user.createdTimestamp / 1000)}:D>`;
         var userJoinedAt = `<t:${Math.round(client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).joinedTimestamp / 1000)}:D>`;
-        var userAvatarPNG = await selected.user.fetch().then(user => user.avatarURL({ format: "png", size: 4096 }));
-        var userAvatarJPG = await selected.user.fetch().then(user => user.avatarURL({ format: "jpg", size: 4096 }));
-        var userAvatarGIF = await selected.user.fetch().then(user => user.avatarURL({ format: "gif", size: 4096 }));
-        var userBannerPNG = await selected.user.fetch().then(user => user.bannerURL({ format: "png", size: 4096 }));
-        var userBannerJPG = await selected.user.fetch().then(user => user.bannerURL({ format: "jpg", size: 4096 }));
-        var userBannerGIF = await selected.user.fetch().then(user => user.bannerURL({ format: "gif", size: 4096 }));
+        var userAvatarPNG = await selected.user.fetch().then(user => user.avatarURL({ extension: "png", size: 4096 }));
+        var userAvatarJPG = await selected.user.fetch().then(user => user.avatarURL({ extension: "jpg", size: 4096 }));
+        var userAvatarGIF = await selected.user.fetch().then(user => user.avatarURL({ extension: "gif", size: 4096 }));
+        var userBannerPNG = await selected.user.fetch().then(user => user.bannerURL({ extension: "png", size: 4096 }));
+        var userBannerJPG = await selected.user.fetch().then(user => user.bannerURL({ extension: "jpg", size: 4096 }));
+        var userBannerGIF = await selected.user.fetch().then(user => user.bannerURL({ extension: "gif", size: 4096 }));
         var bannerColor = await selected.user.fetch().then(user => user.hexAccentColor);
 
         var bannerString;
@@ -50,14 +49,14 @@ export default new Command({
 
         interaction.followUp({
             embeds: [
-                new MessageEmbed()
+                new EmbedBuilder()
                     .setColor(`#${process.env.embedColor}`)
                     .setTimestamp()
                     .setAuthor({
                         name: `${userName}#${userDiscriminator}`,
-                        iconURL: selected.user.avatarURL({ size: 2048, dynamic: true }),
+                        iconURL: selected.user.avatarURL({ size: 2048, forceStatic: false }),
                     })
-                    .setThumbnail(selected.user.avatarURL({ size: 2048, dynamic: true }))
+                    .setThumbnail(selected.user.avatarURL({ size: 2048, forceStatic: false }))
                     .addFields([
                         {
                             name: "**ID**",
