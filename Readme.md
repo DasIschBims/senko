@@ -3,21 +3,34 @@
 Build and start:
 
 > 1
+Rename `.env-example` to `.env` and fill in the required lines
+
+
+> 2
 ```bash
 git clone https://github.com/DasIschBims/senko.git
 ```
 
-> 2
+
+> 3
 ```bash
 npm install
 ```
 
-> 3
+
+> 4
 ```bash
 npm build
 ```
 
-> 4
+
+> 4.5
 ```bash
-npm run start:prod
+chmod 777 start.sh
+```
+
+
+> 5
+```bash
+./start.sh
 ```
