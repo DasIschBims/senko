@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { client } from "../..";
 import { Command } from "../../structures/Command";
 
@@ -17,7 +17,7 @@ export default new Command({
 
         const uptime = Date.now() - Number(client.readyAt);
         interaction.followUp({ embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
             .setColor(`#${process.env.embedColor}`)
             .setTimestamp()
             .addFields([
