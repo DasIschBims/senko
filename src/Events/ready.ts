@@ -1,7 +1,7 @@
 import { Event } from "../structures/Event";
 import { client } from "../index";
 
-export default new Event("ready", async () => {
+export default new Event("ready", () => {
     console.log("Logged in as:", client.user?.tag);
 
     const activityList = [

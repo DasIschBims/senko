@@ -19,7 +19,7 @@ export class ExtendedClient extends Client {
         super({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages], partials: [Partials.Message, Partials.User, Partials.GuildMember] });
     }
 
-    async start() {
+    start() {
         this.registerModules();
         this.express();
         this.mongodb();
