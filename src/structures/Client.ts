@@ -30,7 +30,12 @@ export class ExtendedClient extends Client {
 
     express() {
         const app = express();
-        const port = 8000;
+
+        if (process.env.port) {
+            var port = Number(process.env.port);
+        } else {
+            var port = 8000;
+        }
 
         app.use(cors());
         app.use(bodyParser.json());
@@ -49,13 +54,17 @@ export class ExtendedClient extends Client {
     }
 
     async mongodb() {
-        await mongoose.connect(process.env.mongodbUri, {
-            keepAlive: true,
-        }).then(() => {
-            console.log("Connected to MongoDB");
-        }).catch((err) => {
-            console.log(err);
-        });
+        if (process.env.mongodbUri) {
+            await mongoose.connect(process.env.mongodbUri, {
+                keepAlive: true,
+            }).then(() => {
+                console.log("Connected to MongoDB");
+            }).catch((err) => {
+                console.log(err);
+            });
+        } else {
+            console.log("No MongoDB URI provided");
+        }
     }
 
     async importFile(filePath: string) {
