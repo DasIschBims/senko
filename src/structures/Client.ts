@@ -13,7 +13,6 @@ const globPromise = promisify(glob);
 
 export class ExtendedClient extends Client {
     commands: Collection<string, CommandType> = new Collection();
-    buttons: Collection<any, any>;
 
     constructor() {
         super({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages], partials: [Partials.Message, Partials.User, Partials.GuildMember] });
@@ -62,7 +61,7 @@ export class ExtendedClient extends Client {
     async registerModules() {
         const slashCommands: ApplicationCommandDataResolvable[] = [];
         const commandFiles = await globPromise(
-            `${__dirname}/../commands/*/*{.ts,.js}`
+            `${__dirname}/../Commands/*/*{.ts,.js}`
         );
         commandFiles.forEach(async (filePath) => {
             const command: CommandType = await this.importFile(filePath);
@@ -80,7 +79,7 @@ export class ExtendedClient extends Client {
         });
 
         const eventFiles = await globPromise(
-            `${__dirname}/../events/*{.ts,.js}`
+            `${__dirname}/../Events/*{.ts,.js}`
         );
         eventFiles.forEach(async (filePath) => {
             const event: Event<keyof ClientEvents> = await this.importFile(
