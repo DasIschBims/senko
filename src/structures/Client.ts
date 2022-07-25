@@ -8,6 +8,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import botInfo from "../routes/botInfo";
 import mongoose from "mongoose";
+import cors from "cors";
 
 const globPromise = promisify(glob);
 
@@ -28,6 +29,7 @@ export class ExtendedClient extends Client {
     express() {
         const app = express();
         const port = 8000;
+        app.use(cors());
         app.use(bodyParser.json());
         app.use("/senko/api/info", botInfo);
 
