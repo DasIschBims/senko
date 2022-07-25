@@ -14,11 +14,10 @@ export default new Event("interactionCreate", async (interaction) => {
                 args: interaction.options as CommandInteractionOptionResolver,
                 client,
                 interaction: interaction as ExtendedInteraction
+            }).catch((e: any) => {
+                console.error(e);
+                return interaction.followUp({ embeds: [errorEmbed], ephemeral: true});
             });
-        } else if (interaction.isButton()) {
-            return console.log("Button\n" + interaction);
-        } else {
-            return interaction.followUp({ embeds: [errorEmbed], ephemeral: true});
         }
     }
 });

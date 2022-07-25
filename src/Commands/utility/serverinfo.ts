@@ -21,20 +21,17 @@ export default new Command({
 
         var splashPNG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "png", size: 4096 }));
         var splashJPG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "jpg", size: 4096 }));
-        var splashGIF = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "gif", size: 4096 }));
-        var splashString = "[Link (PNG 4096x)](" + splashPNG + ")\n[Link (JPG 4096x)](" + splashJPG + ")\n[Link (GIF 4096x)](" + splashGIF + ")";
-        if (splashPNG == null && splashJPG == null && splashGIF == null) {
-              splashString = "This server has no discovery splash set.";
+        var splashString = "[Link (PNG 4096x)](" + splashPNG + ")\n[Link (JPG 4096x)](" + splashJPG + ")";
+        if (splashPNG == null && splashJPG == null) {
+              splashString = "This server has no splash image set.";
         }
 
         var emojiString: string;
-        if (interaction.guild.emojis.cache.size > 0) {
-            emojiString = interaction.guild.emojis.cache.map(emoji => emoji.toString()).join(", ");
-            if (interaction.guild.emojis.cache.size > 25) {
-                emojiString += `... ${interaction.guild.emojis.cache.size - 25} more`;
-            }
-        } else {
-            emojiString = "No emojis in this guild.";
+        if (interaction.guild.emojis.cache.size > 10) {
+            emojiString = interaction.guild.emojis.cache.map(e => e.toString()).slice(0, 10).join(", ") + " ... " + (interaction.guild.emojis.cache.size - 10) + " more.";
+        }
+        else {
+            emojiString = interaction.guild.emojis.cache.map(e => e.toString()).join(", ");
         }
 
         var boostString: string;
@@ -83,16 +80,6 @@ export default new Command({
                             inline: true,
                         },
                         {
-                            name: "**Special Channels**",
-                            value: `
-                            AFK: ${interaction.guild.afkChannel ? interaction.guild.afkChannel.name : "None"}
-                            System: ${interaction.guild.systemChannel ? interaction.guild.systemChannel.name : "None"}
-                            Rules: ${interaction.guild.rulesChannel ? interaction.guild.rulesChannel.name : "None"}
-                            Public Updates: ${interaction.guild.publicUpdatesChannel ? interaction.guild.publicUpdatesChannel.name : "None"}
-                            `,
-                            inline: true,
-                        },
-                        {
                             name: "**Boost Level**",
                             value: boostString,
                             inline: true,
@@ -103,8 +90,8 @@ export default new Command({
                             inline: true,
                         },
                         {
-                            name: "**Number of Bans**",
-                            value: interaction.guild.bans.cache.size + " bans",
+                            name: "**Multi Factor Authentication**",
+                            value: `${interaction.guild.mfaLevel ? "Enabled" : "Disabled"}`,
                             inline: true,
                         },
                         {
