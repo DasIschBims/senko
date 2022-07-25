@@ -95,6 +95,11 @@ export default new Command({
                             inline: true,
                         },
                         {
+                            name: "**Partnered**",
+                            value: `${interaction.guild.partnered ? "Yes" : "No"}`,
+                            inline: true,
+                        },
+                        {
                             name: "**Icon**",
                             value: iconString,
                             inline: true,
