@@ -9,6 +9,8 @@ import bodyParser from "body-parser";
 import botInfo from "../routes/botInfo";
 import mongoose from "mongoose";
 import cors from "cors";
+import https from "https";
+import fs from "fs";
 
 const globPromise = promisify(glob);
 
@@ -29,11 +31,21 @@ export class ExtendedClient extends Client {
     express() {
         const app = express();
         const port = 8000;
+
         app.use(cors());
         app.use(bodyParser.json());
         app.use("/senko/api/info", botInfo);
 
-        app.listen(port, () => console.log(`Express is now listening on port ${port}`));
+        https.createServer(
+            {
+                key: fs.readFileSync("/etc/letsencrypt/live/api.dasischbims.social/privkey.pem"),
+                cert: fs.readFileSync("/etc/letsencrypt/live/api.dasischbims.social/fullchain.pem")
+            },
+            app
+        )
+        .listen(port, function () {
+            console.log("Express is now listening over https on port " + port);
+        });
     }
 
     async mongodb() {
