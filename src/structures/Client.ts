@@ -55,7 +55,7 @@ export class ExtendedClient extends Client {
            }
 
            res.type("txt").send("Not found");
-        }
+        });
 
         https.createServer(
             {
