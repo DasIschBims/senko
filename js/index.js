@@ -1,7 +1,7 @@
 const servercount = document.getElementById('server-count');
 const usercount = document.getElementById('user-count');
 
-const url = "https://senko.dasischbims.social/senko/api/info";
+const url = "https://senko.dasischbims.social/api/infos";
 
 function getBotInfo (url) {
     fetch(url)

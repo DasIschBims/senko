@@ -40,7 +40,7 @@ export class ExtendedClient extends Client {
 
         app.use(cors());
         app.use(bodyParser.json());
-        app.use("/senko/api/info", botInfo);
+        app.use("/api/infos", botInfo);
 
         app.get("/css/style.css", function(req, res) {
             res.sendFile(path.resolve(__dirname + "../../../css/style.css"));
@@ -54,16 +54,17 @@ export class ExtendedClient extends Client {
             res.sendFile(path.resolve(__dirname + "../../../img/favicon.ico"));
         });
 
-        app.use(function(req, res) {     
-           if (req.accepts("html")) {
-              res.sendFile(path.resolve(__dirname + "../../../index.html"));
-              return;
-           }
+        app.use(function (req, res) {
+            if (req.accepts("html")) {
+                res.sendFile(path.resolve(__dirname + "../../../index.html"));
+                return;
+            }
 
-           if (req.accepts("json")) {
-              res.json({ error: "Not found" });
-              return;
-           }
+            if (req.accepts("json")) {
+                res.status(404)
+                res.json({ error: "Not found" });
+                return;
+            }
         });
 
         if (process.env.NODE_ENV === "prod") {

@@ -6,7 +6,7 @@ export default new Event("ready", () => {
 
     const activityList = [
         { type: 3, message: `${client.guilds.cache.size} servers` },
-        { type: 3, message: `${client.guilds.cache.size} servers` },
+        { type: 2, message: `${client.users.cache.size} users` },
     ];
 
     var state: number = 0;
@@ -16,6 +16,6 @@ export default new Event("ready", () => {
 
         const activity = activityList[state];
 
-        client.user?.setActivity(`${activity.message}`, { type: activity.type });
+        client.user.setActivity(activity.message, { type: activity.type });
     }, 10000);
 });
