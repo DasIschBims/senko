@@ -17,7 +17,7 @@ export default new Event("messageCreate", async (message) => {
 
     await mongo().then(async (db) => {
         try {
-            const profile = await profileSchmea.findOneAndUpdate({
+            const profile = await profileSchmea.findOne({
                 guildId: message.guild.id,
                 userId: message.author.id,
             });
