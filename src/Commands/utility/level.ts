@@ -66,16 +66,30 @@ export default new Command({
                     }
                 }
 
-                interaction.followUp({ embeds: [
-                    new EmbedBuilder()
-                    .setColor(`#${process.env.embedColor}`)
-                    .setTimestamp()
-                    .setAuthor({
-                        name: `${interaction.user.username}#${interaction.user.discriminator}`,
-                        iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
-                    })
-                    .setDescription(`**Level ${profile.level}**\n${profile.xp}/${profile.level * (profile.level + 1) * 100} XP`)
-                ]});
+                if (interaction.options.get("user")) {
+                    const user = interaction.options.get("user");
+                    interaction.followUp({ embeds: [
+                        new EmbedBuilder()
+                        .setColor(`#${process.env.embedColor}`)
+                        .setTimestamp()
+                        .setAuthor({
+                            name: `${user.user.username}#${user.user.discriminator}`,
+                            iconURL: user.user.avatarURL({ size: 2048, forceStatic: false }),
+                        })
+                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${profile.level * (profile.level + 1) * 100} XP`)
+                    ]});
+                } else {
+                    interaction.followUp({ embeds: [
+                        new EmbedBuilder()
+                        .setColor(`#${process.env.embedColor}`)
+                        .setTimestamp()
+                        .setAuthor({
+                            name: `${interaction.user.username}#${interaction.user.discriminator}`,
+                            iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
+                        })
+                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${profile.level * (profile.level + 1) * 100} XP`)
+                    ]});
+                }
             } catch (err) {
                 console.log(err);
             } finally {
