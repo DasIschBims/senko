@@ -50,7 +50,7 @@ export class ExtendedClient extends Client {
            }
 
            if (req.accepts("json")) {
-              res.json({ error: "Not found" }):
+              res.json({ error: "Not found" });
               return;
            }
 
