@@ -68,8 +68,8 @@ export class ExtendedClient extends Client {
 
         https.createServer(
             {
-                key: fs.readFileSync("/etc/letsencrypt/live/api.dasischbims.social/privkey.pem"),
-                cert: fs.readFileSync("/etc/letsencrypt/live/api.dasischbims.social/fullchain.pem")
+                key: fs.readFileSync(process.env.key),
+                cert: fs.readFileSync(process.env.cert)
             },
             app
         )
