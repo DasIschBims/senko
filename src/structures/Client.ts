@@ -11,6 +11,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import https from "https";
 import fs from "fs";
+import path from "path";
 
 const globPromise = promisify(glob);
 
@@ -41,20 +42,28 @@ export class ExtendedClient extends Client {
         app.use(bodyParser.json());
         app.use("/senko/api/info", botInfo);
 
-        app.use(function(req, res) {
-           res.status(404);
-        
-//           if (req.accepts("html")) {
-//              res.render("404", { url: req.url });
-//              return;
-//           }
+        app.get("/css/style.css", function(req, res) {
+            res.sendFile(path.resolve(__dirname + "../../../css/style.css"));
+        });
+
+        app.get("/js/index.js", function(req, res) {
+            res.sendFile(path.resolve(__dirname + "../../../js/index.js"));
+        });
+
+        app.get("/img/favicon.ico", function(req, res) {
+            res.sendFile(path.resolve(__dirname + "../../../img/favicon.ico"));
+        });
+
+        app.use(function(req, res) {     
+           if (req.accepts("html")) {
+              res.sendFile(path.resolve(__dirname + "../../../index.html"));
+              return;
+           }
 
            if (req.accepts("json")) {
               res.json({ error: "Not found" });
               return;
            }
-
-           res.type("txt").send("Not found");
         });
 
         https.createServer(
