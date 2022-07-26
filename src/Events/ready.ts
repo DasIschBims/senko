@@ -6,7 +6,7 @@ export default new Event("ready", () => {
 
     const activityList = [
         { type: 3, message: `${client.guilds.cache.size} servers` },
-        { type: 2, message: `${client.users.cache.size} users` },
+        { type: 2, message: `${client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0 - 1)} users` },
     ];
 
     var state: number = 0;
