@@ -16,6 +16,13 @@ export default new Command({
                     userId: interaction.user.id,
                 })
 
+                if (!profile) {
+                    await profileSchema.create({
+                        userId: interaction.user.id,
+                        guildId: interaction.guild.id,
+                    });
+                }
+
                 interaction.followUp({ embeds: [
                     new EmbedBuilder()
                     .setColor(`#${process.env.embedColor}`)
