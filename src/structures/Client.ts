@@ -41,6 +41,22 @@ export class ExtendedClient extends Client {
         app.use(bodyParser.json());
         app.use("/senko/api/info", botInfo);
 
+        app.use(function(req, res) {
+           res.status(404);
+        
+           if (req.accepts("html")) {
+              res.render("404", { url: req.url });
+              return;
+           }
+
+           if (req.accepts("json")) {
+              res.json({ error: "Not found" }):
+              return;
+           }
+
+           res.type("txt").send("Not found");
+        }
+
         https.createServer(
             {
                 key: fs.readFileSync("/etc/letsencrypt/live/api.dasischbims.social/privkey.pem"),
