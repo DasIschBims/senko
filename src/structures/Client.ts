@@ -66,16 +66,28 @@ export class ExtendedClient extends Client {
            }
         });
 
-        https.createServer(
-            {
-                key: fs.readFileSync(process.env.key),
-                cert: fs.readFileSync(process.env.cert)
-            },
-            app
-        )
-        .listen(port, function () {
-            console.log("Express is now listening over https on port " + port);
-        });
+        console.log(process.env.NODE_ENV)
+        if (process.env.NODE_ENV === "prod") {
+            const keypath = path.resolve(process.env.key)
+            const certpath = path.resolve(process.env.cert)
+            console.log(keypath)
+            console.log(certpath)
+
+            https.createServer(
+                {
+                    key: fs.readFileSync(keypath),
+                    cert: fs.readFileSync(certpath)
+                },
+                app
+            )
+            .listen(port, function () {
+                console.log("Express is now listening over https on port " + port);
+            });
+        } else {
+            app.listen(port, function () {
+                console.log("Express is now listening over http on port " + port);
+            });
+        }
     }
 
     async mongodb() {

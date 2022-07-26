@@ -7,7 +7,9 @@ declare global {
             mongodbUri: string;
             port: number;
             embedColor: string;
-            enviorment: "dev" | "prod" | "debug";
+            key: string;
+            cert: string;
+            NODE_ENV: "dev" | "prod" | "debug";
         }
     }
 }
