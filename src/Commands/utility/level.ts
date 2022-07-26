@@ -21,6 +21,18 @@ export default new Command({
                         userId: interaction.user.id,
                         guildId: interaction.guild.id,
                     });
+
+                    return interaction.followUp({
+                        embeds: [
+                            new EmbedBuilder()
+                            .setColor(`#${process.env.embedColor}`)
+                            .setAuthor({
+                                name: `${interaction.user.username}#${interaction.user.discriminator}`,
+                                iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
+                            })
+                            .setDescription("You didn't have a profile yet, so I created one for you.")
+                        ]
+                    })
                 }
 
                 interaction.followUp({ embeds: [
