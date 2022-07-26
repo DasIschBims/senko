@@ -66,12 +66,9 @@ export class ExtendedClient extends Client {
            }
         });
 
-        console.log(process.env.NODE_ENV)
         if (process.env.NODE_ENV === "prod") {
             const keypath = path.resolve(process.env.key)
             const certpath = path.resolve(process.env.cert)
-            console.log(keypath)
-            console.log(certpath)
 
             https.createServer(
                 {
