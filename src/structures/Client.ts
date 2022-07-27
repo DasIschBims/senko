@@ -7,6 +7,7 @@ import { Event } from "./Event";
 import express from "express";
 import bodyParser from "body-parser";
 import botInfo from "../routes/botInfo";
+import userInfo from "../routes/userInfo";
 import mongoose from "mongoose";
 import cors from "cors";
 import https from "https";
@@ -41,6 +42,7 @@ export class ExtendedClient extends Client {
         app.use(cors());
         app.use(bodyParser.json());
         app.use("/api/infos", botInfo);
+        app.use("/api/users", userInfo)
 
         app.get("/css/style.css", function(req, res) {
             res.sendFile(path.resolve(__dirname + "../../../css/style.css"));

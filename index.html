@@ -16,6 +16,32 @@
             <i id="uptime" class="text">Loading...</i>
             <i id="command-count" class="text">Loading...</i>
         </div>
+        <div id="level-container">
+            <div id="input-container">
+                <div id="user-id-box">
+                    <input name="user-id" type="input" id="user-id" class="level-input" required placeholder="User Id">
+                    <label for="user-id" type="input" class="input-label">User Id</label>
+                </div>
+                <div id="user-level-box">
+                    <input name="guild-id" id="guild-id" class="level-input" required placeholder="User Id">
+                    <label for="guild-id" class="input-label">Guild Id</label>
+                </div>
+            </div>
+            <button id="get-level">Get Level</button>
+            <div id="level-card" class="display-none">
+                <div id="user-profile">
+                    <img id="user-avatar" alt="User Avatar">
+                    <div id="user-info">
+                        <i id="user-name"></i>
+                        <i id="level-info"></i>
+                        <i id="xp-info"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="error-card" class="display-none">
+                <i id="error-message" class="text">An error occured while loading the data.</i>
+            </div>
+        </div>
     </div>
     <script src="js/index.js"></script>
 </body>

@@ -35,7 +35,7 @@ export default new Event("messageCreate", async (message) => {
                     },
                     {
                         $set: {
-                            xp: profile.xp + Math.floor(Math.random() * 15) + 20,
+                            xp: profile.xp + Math.floor(Math.random() * 15) + 10,
                         },
                     }
                 );
