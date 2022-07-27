@@ -89,7 +89,6 @@ export default new Command({
                             iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
                         })
                         .setDescription(`**Level ${profile.level}**\n${profile.xp}/${profile.level * (profile.level + 1) * 100} XP`)
-                        .setFooter({ text: "Tip: Check your level on the Website (https://senko.dasischbims.social/)", iconURL: client.user.avatarURL({ size: 2048, forceStatic: false }) })
                     ]});
                 }
             } catch (err) {
