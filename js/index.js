@@ -11,7 +11,7 @@ function getBotInfo (url) {
     .then(data => {
         servercount.innerHTML = data.guildCount + " Servers";
         usercount.innerHTML = data.userCount + " Users";
-        uptime.innerHTML = data.uptime / 1000 + "s Uptime";
+        uptime.innerHTML = Math.floor(data.uptime / 1000) + "s Uptime";
         commandcount.innerHTML = data.commands + " Commands"
     }).catch(error => {
         servercount.innerHTML = "Error occured while";
