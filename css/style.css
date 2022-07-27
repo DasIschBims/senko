@@ -94,6 +94,20 @@ body {
     color: #9b9b9b;
 }
 
+.level-input:not(placeholder-shown) ~ .input-label {
+    display: block;
+    top: 0;
+    color: #9696fc;
+    font-weight: 700;
+}
+
+.level-input:placeholder-shown ~ .input-label {
+    display: block;
+    top: 50%;
+    color: #9b9b9b;
+    font-weight: 300;
+}
+
 .level-input:focus {
     padding-bottom: 6px;
     font-weight: 700;
