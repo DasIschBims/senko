@@ -12,10 +12,12 @@ function getBotInfo (url) {
         servercount.innerHTML = data.guildCount + " Servers";
         usercount.innerHTML = data.userCount + " Users";
         uptime.innerHTML = Math.floor(data.uptime / 1000) + "s Uptime";
-        commandcount.innerHTML = data.commands + " Commands"
+        commandcount.innerHTML = data.commands + " Commands";
     }).catch(error => {
         servercount.innerHTML = "Error occured while";
         usercount.innerHTML = "loading the data.";
+        uptime.innerHTML = "";
+        commandcount.innerHTML = "";
         console.warn(error);
     });
 };
