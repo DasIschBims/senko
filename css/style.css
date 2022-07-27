@@ -5,8 +5,21 @@
     font-family: 'Poppins', sans-serif;
 }
 
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #001b2f;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #9696fc;
+    border-radius: 0px;
+}
+
 body {
-    overflow: hidden;
+    overflow-x: hidden;
     background-color: #001220;
     display: flex;
     justify-content: center;
@@ -64,6 +77,7 @@ body {
 }
 
 .level-input {
+    user-select: none;
     font-family: inherit;
     width: 30vh;
     border: 0;
@@ -86,6 +100,7 @@ body {
 }
 
 .input-label {
+    user-select: none;
     position: absolute;
     top: 50%;
     display: block;
@@ -143,6 +158,7 @@ body {
     border-radius: 5px;
     border-color: #6969B0;
     color: #fff;
+    font-family: "Poppins", sans-serif;
     box-shadow: 0 0 40px 40px rgba(150,150,252,0.5) inset, 0 0 0 0 rgba(150,150,252,0.5);
     -webkit-box-shadow: 0 0 40px 40px rgba(150,150,252,0.5) inset, 0 0 0 0 rgba(150,150,252,0.5);
     -moz-box-shadow: 0 0 40px 40px rgba(150,150,252,0.5) inset, 0 0 0 0 rgba(150,150,252,0.5);
@@ -155,11 +171,29 @@ body {
     -moz-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
 }
 
+#get-level:focus {
+    outline: #6969B0 1.5px solid;
+    box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+    -webkit-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+    -moz-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+}
+
 #level-card {
     width: 80%;
     margin: 20px;
     padding: 20px;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#level-heading {
+    margin-bottom: 25px;
+}
+
+#level-form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -207,6 +241,57 @@ body {
     font-weight: 700;
     color: #fff;
     font-style: normal;
+}
+
+#invite-container {
+    user-select: none;
+    width: 70vh;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #001b2f;
+    -webkit-box-shadow:0px 0px 10px 5px rgba(150,150,252,0.5);
+    -moz-box-shadow: 0px 0px 10px 5px rgba(150,150,252,0.5);
+    box-shadow: 0px 0px 10px 5px rgba(150,150,252,0.5);
+}
+
+#invite-btn {
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: 2px solid;
+    min-width: 30vh;
+    appearance: none;
+    cursor: pointer;
+    margin: 10px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    border-color: #6969B0;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 0 0 40px 40px rgba(150,150,252,0.5) inset, 0 0 0 0 rgba(150,150,252,0.5);
+    -webkit-box-shadow: 0 0 40px 40px rgba(150,150,252,0.5) inset, 0 0 0 0 rgba(150,150,252,0.5);
+    -moz-box-shadow: 0 0 40px 40px rgba(150,150,252,0.5) inset, 0 0 0 0 rgba(150,150,252,0.5);
+    transition: all 150ms ease-in-out;
+}
+
+#invite-btn:hover {
+    box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+    -webkit-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+    -moz-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+}
+
+#invite-btn:focus {
+    outline: #6969B0 1.5px solid;
+    box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+    -webkit-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
+    -moz-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
 }
 
 .text {
