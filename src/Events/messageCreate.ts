@@ -65,7 +65,7 @@ export default new Event("messageCreate", async (message) => {
                                 new EmbedBuilder()
                                     .setColor(`#${process.env.embedColor}`)
                                     .setTimestamp()
-                                    .setTitle("You are now level " + profile.level + "! 🎉")
+                                    .setTitle("You are now level " + (profile.level + 1) + "! 🎉")
                                     .setImage("https://c.tenor.com/CqZZfYNz_mgAAAAC/senko-san-anime.gif")
                             ]
                         })
