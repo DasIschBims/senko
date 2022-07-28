@@ -29,10 +29,10 @@ export default new Command({
         var emojiString: string;
         if (interaction.guild.emojis.cache.size > 10) {
             emojiString = interaction.guild.emojis.cache.map(e => e.toString()).slice(0, 10).join(", ") + " ... " + (interaction.guild.emojis.cache.size - 10) + " more.";
-        } else if (interaction.guild.emojis.cache.size <= 10 || interaction.guild.emojis.cache.size != 0) {
-            emojiString = interaction.guild.emojis.cache.map(e => e.toString()).join(", ");
-        } else {
+        } else if (interaction.guild.emojis.cache.size == 0 || interaction.guild.emojis.cache.size == undefined) {
             emojiString = "This server has no emojis added.";
+        } else if (interaction.guild.emojis.cache.size <= 10) {
+            emojiString = interaction.guild.emojis.cache.map(e => e.toString()).join(", ");
         }
 
         var boostString: string;
