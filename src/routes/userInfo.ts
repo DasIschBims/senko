@@ -5,7 +5,7 @@ import profileSchmea from "../schemas/profile";
 import mongoose from "mongoose";
 
 const getNextXp = (level: number) => {
-    return Math.floor(level * (level + 1) * 100);
+    return Math.floor(10*(level ^ 2) + (55 * level) + 100);
 }
 
 router.get("/:guildId/:userId", async (req, res) => {
