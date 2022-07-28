@@ -3,8 +3,7 @@ import { EmbedBuilder } from "discord.js";
 import { ExtendedClient } from "./structures/Client";
 
 const errorEmbed = new EmbedBuilder()
-.setColor("#635291")
-.setTimestamp()
+.setColor("#ffffff")
 .addFields([
     {
         name: "An error occured",

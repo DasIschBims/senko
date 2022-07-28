@@ -47,11 +47,6 @@ export default new Command({
                 new EmbedBuilder()
                     .setColor(`#${process.env.embedColor}`)
                     .setTimestamp()
-                    .setAuthor({
-                        name: `Senko#5072`,
-                        iconURL: interaction.guild.iconURL({ size: 2048, forceStatic: false }),
-                    })
-
                     .setThumbnail(interaction.guild.iconURL({ size: 2048, forceStatic: false }))
                     .addFields([
                         {
