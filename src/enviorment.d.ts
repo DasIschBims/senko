@@ -12,6 +12,10 @@ declare global {
             NODE_ENV: "dev" | "prod" | "debug";
         }
     }
+    declare module "*.png" {
+         const value: any;
+         export = value;
+    }
 }
 
 export {};
