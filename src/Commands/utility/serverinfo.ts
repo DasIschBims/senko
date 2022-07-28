@@ -15,21 +15,21 @@ export default new Command({
         var bannerJPG = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "jpg", size: 4096 }));
         var bannerGIF = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "gif", size: 4096 }));
         var bannerString = "[Link (PNG 4096x)](" + bannerPNG + ")\n[Link (JPG 4096x)](" + bannerJPG + ")\n[Link (GIF 4096x)](" + bannerGIF + ")";
-        if (bannerPNG == null && bannerJPG == null && bannerGIF == null) {
+        if (!bannerPNG && !bannerJPG && !bannerGIF) {
            bannerString = "This server has no banner set.";
         }
 
         var splashPNG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "png", size: 4096 }));
         var splashJPG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "jpg", size: 4096 }));
         var splashString = "[Link (PNG 4096x)](" + splashPNG + ")\n[Link (JPG 4096x)](" + splashJPG + ")";
-        if (splashPNG == null && splashJPG == null) {
+        if (!splashPNG && !splashJPG) {
               splashString = "This server has no splash image set.";
         }
 
         var emojiString: string;
         if (interaction.guild.emojis.cache.size > 10) {
             emojiString = interaction.guild.emojis.cache.map(e => e.toString()).slice(0, 10).join(", ") + " ... " + (interaction.guild.emojis.cache.size - 10) + " more.";
-        } else if (interaction.guild.emojis.cache.size <= 10) {
+        } else if (interaction.guild.emojis.cache.size <= 10 || interaction.guild.emojis.cache.size != 0) {
             emojiString = interaction.guild.emojis.cache.map(e => e.toString()).join(", ");
         } else {
             emojiString = "This server has no emojis added.";
