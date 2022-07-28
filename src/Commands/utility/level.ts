@@ -77,7 +77,7 @@ export default new Command({
                             name: `${user.user.username}#${user.user.discriminator}`,
                             iconURL: user.user.avatarURL({ size: 2048, forceStatic: false }),
                         })
-                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${profile.level * (profile.level + 1) * 100} XP`)
+                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${10 * (profile.level ^ 2) + (55 * profile.level) + 100} XP`)
                     ]});
                 } else {
                     interaction.followUp({ embeds: [
@@ -88,7 +88,7 @@ export default new Command({
                             name: `${interaction.user.username}#${interaction.user.discriminator}`,
                             iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
                         })
-                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${profile.level * (profile.level + 1) * 100} XP`)
+                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${10 * (profile.level ^ 2) + (55 * profile.level) + 100} XP`)
                     ]});
                 }
             } catch (err) {
