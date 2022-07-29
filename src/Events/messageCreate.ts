@@ -13,7 +13,7 @@ export default new Event("messageCreate", async (message) => {
     const mongo = async () => await mongoose.connect(process.env.mongodbUri);
 
     const getNextXp = (level: number) => {
-        return Math.floor(10*(level ^ 2) + (55 * level) + 100);
+        return Math.floor(10*(level * level) + (55 * level) + 100);
     }
 
     if (cooldowns.has(message.author.id)) {
