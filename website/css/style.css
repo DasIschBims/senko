@@ -294,6 +294,16 @@ body {
     -moz-box-shadow: 0 0 10px 0 rgba(150,150,252,0.5) inset, 0 0 10px 4px rgba(150,150,252,0.5);
 }
 
+#error-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#error-message {
+    font-size: 1.5rem;
+}
+
 .text {
     color: #9696fc;
     text-decoration: none;

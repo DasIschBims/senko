@@ -13,6 +13,8 @@ import cors from "cors";
 import https from "https";
 import fs from "fs";
 import path from "path";
+import rateLimit from "express-rate-limit";
+import slowDown from "express-slow-down";
 
 const globPromise = promisify(glob);
 
@@ -33,40 +35,67 @@ export class ExtendedClient extends Client {
     express() {
         const app = express();
 
+        let port: number;
+
         if (process.env.port) {
-            var port = Number(process.env.port);
+            port = Number(process.env.port);
         } else {
-            var port = 8000;
+            port = 8000;
         }
 
         app.use(cors());
         app.use(bodyParser.json());
-        app.use("/api/infos", botInfo);
-        app.use("/api/users", userInfo)
+        
+        const apiLimitInfos = rateLimit({
+            windowMs: 3 * 60 * 1000,
+            max: 20
+        })
 
-        app.get("/css/style.css", function(req, res) {
-            res.sendFile(path.resolve(__dirname + "../../../css/style.css"));
+        const apiSpeedLimitInfos = slowDown({
+            windowMs: 3 * 60 * 1000,
+            delayAfter: 12,
+            delayMs: 50
+        })
+
+        const apiLimitUsers = rateLimit({
+            windowMs: 5 * 60 * 1000,
+            max: 20
+        })
+
+        const apiSpeedLimitUsers = slowDown({
+            windowMs: 5 * 60 * 1000,
+            delayAfter: 5,
+            delayMs: 100
+        })
+
+
+        app.get("/", function (req, res) {
+            res.sendFile(path.resolve(__dirname + "../../../website/index.html"))
+        });
+        app.get("/css/style.css", function (req, res) {
+            res.sendFile(path.resolve(__dirname + "../../../website/css/style.css"));
+        });
+        app.get("/js/index.js", function (req, res) {
+            res.sendFile(path.resolve(__dirname + "../../../website/js/index.js"));
+        });
+        app.get("/img/favicon.ico", function (req, res) {
+            res.sendFile(path.resolve(__dirname + "../../../website/img/favicon.ico"));
+        });
+        app.get("/levelchart.png", function (req, res) {
+            res.sendFile(path.resolve(__dirname + "../images/levelchart.png"));
         });
 
-        app.get("/js/index.js", function(req, res) {
-            res.sendFile(path.resolve(__dirname + "../../../js/index.js"));
-        });
+        app.use("/api/infos", apiLimitInfos, apiSpeedLimitInfos ,botInfo);
+        app.use("/api/users", apiLimitUsers, apiSpeedLimitUsers , userInfo);
 
-        app.get("/img/favicon.ico", function(req, res) {
-            res.sendFile(path.resolve(__dirname + "../../../img/favicon.ico"));
-        });
+        app.all("*", function (req, res) {
+            res.status(404)
+            res.redirect("/")
+        })
 
         app.use(function (req, res) {
-            if (req.accepts("html")) {
-                res.sendFile(path.resolve(__dirname + "../../../index.html"));
-                return;
-            }
-
-            if (req.accepts("json")) {
-                res.status(404)
-                res.json({ error: "Not found" });
-                return;
-            }
+            res.status(404)
+            res.json({ error: "Not found" });
         });
 
         if (process.env.NODE_ENV === "prod") {
@@ -80,9 +109,9 @@ export class ExtendedClient extends Client {
                 },
                 app
             )
-            .listen(port, function () {
-                console.log("Express is now listening over https on port " + port);
-            });
+                .listen(port, function () {
+                    console.log("Express is now listening over https on port " + port);
+                });
         } else {
             app.listen(port, function () {
                 console.log("Express is now listening over http on port " + port);
@@ -107,7 +136,7 @@ export class ExtendedClient extends Client {
     async importFile(filePath: string) {
         return (await import(filePath))?.default;
     }
-    
+
     async registerCommands({ commands, guildId }: RegisterCommandsOptions) {
         if (guildId) {
             this.guilds.cache.get(guildId)?.commands.set(commands);

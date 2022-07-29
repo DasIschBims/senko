@@ -1,8 +1,7 @@
 import { EmbedBuilder, ApplicationCommandOptionType } from "discord.js";
 import { Command } from "../../structures/Command";
 import profileSchema from "../../schemas/profile";
-import mongoose from "mongoose";
-import { client } from "../..";
+import getNextXp from "../../Utils/Level/GetNextXp";
 
 export default new Command({
     name: "level",
@@ -16,86 +15,84 @@ export default new Command({
         }
     ],
     run: async ({ interaction }) => {
-        const mongo = async () => await mongoose.connect(process.env.mongodbUri);
-
-        await mongo().then(async (db) => {
-            try {
-                var profile;
-                if (interaction.options.get("user")) {
-                    const user = interaction.options.get("user");
-                    profile = await profileSchema.findOne({
-                        userId: user.user.id,
-                        guildId: interaction.guild.id,
-                    });
-                } else {
-                    profile = await profileSchema.findOne({
-                        guildId: interaction.guild.id,
-                        userId: interaction.user.id,
-                    });
-                }
-
-                if (!profile) {
-                    await profileSchema.create({
-                        userId: interaction.user.id,
-                        guildId: interaction.guild.id,
-                    });
-                    if (interaction.options.get("user")) {
-                        const user = interaction.options.get("user");
-                        return interaction.followUp({
-                            embeds: [
-                                new EmbedBuilder()
-                                    .setColor(`#${process.env.embedColor}`)
-                                    .setAuthor({
-                                        name: `${user.user.username}#${user.user.discriminator}`,
-                                        iconURL: user.user.avatarURL({ size: 2048, forceStatic: false }),
-                                    })
-                                    .setDescription("This user has no profile yet.")
-                            ]
-                        })
-                    } else {
-                        return interaction.followUp({
-                            embeds: [
-                                new EmbedBuilder()
-                                    .setColor(`#${process.env.embedColor}`)
-                                    .setAuthor({
-                                        name: `${interaction.user.username}#${interaction.user.discriminator}`,
-                                        iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
-                                    })
-                                    .setDescription("You didn't have a profile yet, so I created one for you.")
-                            ]
-                        })
-                    }
-                }
-
-                if (interaction.options.get("user")) {
-                    const user = interaction.options.get("user");
-                    interaction.followUp({ embeds: [
-                        new EmbedBuilder()
-                        .setColor(`#${process.env.embedColor}`)
-                        .setTimestamp()
-                        .setAuthor({
-                            name: `${user.user.username}#${user.user.discriminator}`,
-                            iconURL: user.user.avatarURL({ size: 2048, forceStatic: false }),
-                        })
-                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${10 * (profile.level * profile.level) + (55 * profile.level) + 100} XP`)
-                    ]});
-                } else {
-                    interaction.followUp({ embeds: [
-                        new EmbedBuilder()
-                        .setColor(`#${process.env.embedColor}`)
-                        .setTimestamp()
-                        .setAuthor({
-                            name: `${interaction.user.username}#${interaction.user.discriminator}`,
-                            iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
-                        })
-                        .setDescription(`**Level ${profile.level}**\n${profile.xp}/${10 * (profile.level * profile.level) + (55 * profile.level) + 100} XP`)
-                    ]});
-                }
-            } catch (err) {
-                console.log(err);
-            } finally {
-                await mongoose.disconnect();
+        try {
+            let profile;
+            if (interaction.options.get("user")) {
+                const user = interaction.options.get("user");
+                profile = await profileSchema.findOne({
+                    userId: user.user.id,
+                    guildId: interaction.guild.id,
+                });
+            } else {
+                profile = await profileSchema.findOne({
+                    guildId: interaction.guild.id,
+                    userId: interaction.user.id,
+                });
             }
-        }).catch(err => console.log(err));
+
+            if (!profile) {
+                await profileSchema.create({
+                    userId: interaction.user.id,
+                    guildId: interaction.guild.id,
+                });
+                if (interaction.options.get("user")) {
+                    const user = interaction.options.get("user");
+                    return interaction.followUp({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setColor(`#${process.env.embedColor}`)
+                                .setAuthor({
+                                    name: `${user.user.username}#${user.user.discriminator}`,
+                                    iconURL: user.user.avatarURL({ size: 2048, forceStatic: false }),
+                                })
+                                .setDescription("This user has no profile yet.")
+                        ]
+                    })
+                } else {
+                    return interaction.followUp({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setColor(`#${process.env.embedColor}`)
+                                .setAuthor({
+                                    name: `${interaction.user.username}#${interaction.user.discriminator}`,
+                                    iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
+                                })
+                                .setDescription("You didn't have a profile yet, so I created one for you.")
+                        ]
+                    })
+                }
+            }
+
+            if (interaction.options.get("user")) {
+                const user = interaction.options.get("user");
+                interaction.followUp({
+                    embeds: [
+                        new EmbedBuilder()
+                            .setColor(`#${process.env.embedColor}`)
+                            .setTimestamp()
+                            .setAuthor({
+                                name: `${user.user.username}#${user.user.discriminator}`,
+                                iconURL: user.user.avatarURL({ size: 2048, forceStatic: false }),
+                            })
+                            .setDescription(`**Level ${profile.level}**\n${profile.xp}/${getNextXp(profile.level)} XP`)
+                    ]
+                });
+            } else {
+                interaction.followUp({
+                    embeds: [
+                        new EmbedBuilder()
+                            .setColor(`#${process.env.embedColor}`)
+                            .setTimestamp()
+                            .setAuthor({
+                                name: `${interaction.user.username}#${interaction.user.discriminator}`,
+                                iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
+                            })
+                            .setDescription(`**Level ${profile.level}**\n${profile.xp}/${getNextXp(profile.level)} XP`)
+                    ]
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 });

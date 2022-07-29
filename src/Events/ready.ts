@@ -9,7 +9,7 @@ export default new Event("ready", () => {
         { type: 2, message: `${client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0 - 1)} users` },
     ];
 
-    var state: number = 0;
+    let state: number = 0;
 
     setInterval(() => {
         state = (state + 1) % activityList.length;

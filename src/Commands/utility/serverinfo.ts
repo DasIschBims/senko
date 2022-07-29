@@ -6,27 +6,27 @@ export default new Command({
     description: "Displays information about the server.",
     run: async ({ interaction }) => {
 
-        var iconPNG = await interaction.guild.fetch().then(guild => guild.iconURL({ extension: "png", size: 4096 }));
-        var iconJPG = await interaction.guild.fetch().then(guild => guild.iconURL({ extension: "jpg", size: 4096 }));
-        var iconGIF = await interaction.guild.fetch().then(guild => guild.iconURL({ extension: "gif", size: 4096 }));
-        var iconString = "[Link (PNG 4096x)](" + iconPNG + ")\n[Link (JPG 4096x)](" + iconJPG + ")\n[Link (GIF 4096x)](" + iconGIF + ")";
+        let iconPNG = await interaction.guild.fetch().then(guild => guild.iconURL({ extension: "png", size: 4096 }));
+        let iconJPG = await interaction.guild.fetch().then(guild => guild.iconURL({ extension: "jpg", size: 4096 }));
+        let iconGIF = await interaction.guild.fetch().then(guild => guild.iconURL({ extension: "gif", size: 4096 }));
+        let iconString = "[Link (PNG 4096x)](" + iconPNG + ")\n[Link (JPG 4096x)](" + iconJPG + ")\n[Link (GIF 4096x)](" + iconGIF + ")";
 
-        var bannerPNG = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "png", size: 4096 }));
-        var bannerJPG = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "jpg", size: 4096 }));
-        var bannerGIF = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "gif", size: 4096 }));
-        var bannerString = "[Link (PNG 4096x)](" + bannerPNG + ")\n[Link (JPG 4096x)](" + bannerJPG + ")\n[Link (GIF 4096x)](" + bannerGIF + ")";
+        let bannerPNG = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "png", size: 4096 }));
+        let bannerJPG = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "jpg", size: 4096 }));
+        let bannerGIF = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "gif", size: 4096 }));
+        let bannerString = "[Link (PNG 4096x)](" + bannerPNG + ")\n[Link (JPG 4096x)](" + bannerJPG + ")\n[Link (GIF 4096x)](" + bannerGIF + ")";
         if (!bannerPNG && !bannerJPG && !bannerGIF) {
            bannerString = "This server has no banner set.";
         }
 
-        var splashPNG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "png", size: 4096 }));
-        var splashJPG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "jpg", size: 4096 }));
-        var splashString = "[Link (PNG 4096x)](" + splashPNG + ")\n[Link (JPG 4096x)](" + splashJPG + ")";
+        let splashPNG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "png", size: 4096 }));
+        let splashJPG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "jpg", size: 4096 }));
+        let splashString = "[Link (PNG 4096x)](" + splashPNG + ")\n[Link (JPG 4096x)](" + splashJPG + ")";
         if (!splashPNG && !splashJPG) {
               splashString = "This server has no splash image set.";
         }
 
-        var emojiString: string;
+        let emojiString: string;
         if (interaction.guild.emojis.cache.size > 10) {
             emojiString = interaction.guild.emojis.cache.map(e => e.toString()).slice(0, 10).join(", ") + " ... " + (interaction.guild.emojis.cache.size - 10) + " more.";
         } else if (interaction.guild.emojis.cache.size == 0 || interaction.guild.emojis.cache.size == undefined) {
@@ -35,7 +35,7 @@ export default new Command({
             emojiString = interaction.guild.emojis.cache.map(e => e.toString()).join(", ");
         }
 
-        var boostString: string;
+        let boostString: string;
         if (interaction.guild.premiumTier > 0) {
             boostString = `Level: ${interaction.guild.premiumTier} <a:nitroboost:874899082613768222>`;
         }

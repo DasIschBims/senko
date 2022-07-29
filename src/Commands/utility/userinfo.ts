@@ -16,23 +16,23 @@ export default new Command({
     run: async ({ interaction }) => {
         const selected = interaction.options.get("user") || interaction.member;
 
-        var userId = selected.user.id;
-        var userMention = selected.user.toString();
-        var userName = selected.user.username;
-        var userDiscriminator = selected.user.discriminator;
-        var userRoles = client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).roles.cache.map(role => role.toString()).join(", ");
-        var userNickname = client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).nickname;
-        var userCreatedAt = `<t:${Math.round(selected.user.createdTimestamp / 1000)}:D>`;
-        var userJoinedAt = `<t:${Math.round(client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).joinedTimestamp / 1000)}:D>`;
-        var userAvatarPNG = await selected.user.fetch().then(user => user.avatarURL({ extension: "png", size: 4096 }));
-        var userAvatarJPG = await selected.user.fetch().then(user => user.avatarURL({ extension: "jpg", size: 4096 }));
-        var userAvatarGIF = await selected.user.fetch().then(user => user.avatarURL({ extension: "gif", size: 4096 }));
-        var userBannerPNG = await selected.user.fetch().then(user => user.bannerURL({ extension: "png", size: 4096 }));
-        var userBannerJPG = await selected.user.fetch().then(user => user.bannerURL({ extension: "jpg", size: 4096 }));
-        var userBannerGIF = await selected.user.fetch().then(user => user.bannerURL({ extension: "gif", size: 4096 }));
-        var bannerColor = await selected.user.fetch().then(user => user.hexAccentColor);
+        let userId = selected.user.id;
+        let userMention = selected.user.toString();
+        let userName = selected.user.username;
+        let userDiscriminator = selected.user.discriminator;
+        let userRoles = client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).roles.cache.map(role => role.toString()).join(", ");
+        let userNickname = client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).nickname;
+        let userCreatedAt = `<t:${Math.round(selected.user.createdTimestamp / 1000)}:D>`;
+        let userJoinedAt = `<t:${Math.round(client.guilds.cache.get(interaction.guild.id).members.cache.get(userId).joinedTimestamp / 1000)}:D>`;
+        let userAvatarPNG = await selected.user.fetch().then(user => user.avatarURL({ extension: "png", size: 4096 }));
+        let userAvatarJPG = await selected.user.fetch().then(user => user.avatarURL({ extension: "jpg", size: 4096 }));
+        let userAvatarGIF = await selected.user.fetch().then(user => user.avatarURL({ extension: "gif", size: 4096 }));
+        let userBannerPNG = await selected.user.fetch().then(user => user.bannerURL({ extension: "png", size: 4096 }));
+        let userBannerJPG = await selected.user.fetch().then(user => user.bannerURL({ extension: "jpg", size: 4096 }));
+        let userBannerGIF = await selected.user.fetch().then(user => user.bannerURL({ extension: "gif", size: 4096 }));
+        let bannerColor = await selected.user.fetch().then(user => user.hexAccentColor);
 
-        var bannerString;
+        let bannerString;
         if (userBannerPNG && userBannerJPG && userBannerGIF) {
             bannerString = `[Link (PNG 4096x)](${userBannerPNG})\n[Link (JPG 4096x)](${userBannerJPG})\n[Link (GIF 4096x)](${userBannerGIF})`;
         } else {
@@ -43,7 +43,7 @@ export default new Command({
             }
         }
 
-        var avatarString = `[Link (PNG 4096x)](${userAvatarPNG})\n[Link (JPG 4096x)](${userAvatarJPG})\n[Link (GIF 4096x)](${userAvatarGIF})`;
+        let avatarString = `[Link (PNG 4096x)](${userAvatarPNG})\n[Link (JPG 4096x)](${userAvatarJPG})\n[Link (GIF 4096x)](${userAvatarGIF})`;
 
         if (!userNickname) userNickname = "User didn't set a nickname.";
 

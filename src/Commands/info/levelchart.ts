@@ -1,6 +1,5 @@
 import { EmbedBuilder } from "discord.js";
 import { Command } from "../../structures/Command";
-import levelchart from "../../images/levelchart.png"
 
 export default new Command({
     name: "levelchart",
@@ -12,7 +11,7 @@ export default new Command({
             .setTimestamp()
             .setTitle("Levelchart 📈")
             .setDescription("The function to calculate the xp needed for an level is as follows:\n``10 * (level ^ 2) + (55 * level) + 100``")
-            .setImage(levelchart)
+            .setImage("https://senko.dasischbims.social/levelchart.png")
         ]});
     }
 });
