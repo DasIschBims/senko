@@ -24,13 +24,18 @@ npm build
 ```
 
 
-> 4.5
+> 4.5 (linux only)
 ```bash
 chmod 777 start.sh
 ```
 
 
-> 5
+> 5 (linux/bash only)
 ```bash
 ./start.sh
+```
+
+> 5 (windows)
+```bash
+node dist/index.js
 ```
