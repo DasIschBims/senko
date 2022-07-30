@@ -1,15 +1,11 @@
 import { EmbedBuilder } from "discord.js";
 import { Command } from "../../structures/Command";
 import profileSchema from "../../schemas/profile";
-import mongoose from "mongoose";
 
 export default new Command({
     name: "leaderboard",
     description: "Get the top 10 users by level",
     run: async ({ interaction }) => {
-        const mongo = async () => await mongoose.connect(process.env.mongodbUri);
-
-        await mongo().then(async (db) => {
             try {
                 const profiles = await profileSchema.find({
                     guildId: interaction.guild.id,
@@ -23,9 +19,6 @@ export default new Command({
                 interaction.followUp({ embeds: [embed] });
             } catch (err) {
                 console.log(err);
-            } finally {
-                await mongoose.disconnect();
             }
-        })
     }
 });
