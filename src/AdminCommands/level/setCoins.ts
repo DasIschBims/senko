@@ -7,11 +7,15 @@ module.exports = {
         let userId;
         if (args[0] === "self") {
             userId = message.author.id;
+        } else {
+            userId = args[0]
         }
 
         let guildId;
         if (args[1] === "this") {
             guildId = message.guild.id;
+        } else {
+            guildId = args[1]
         }
 
         const coins = parseInt(args[2]);
