@@ -1,4 +1,4 @@
-const url = "http://localhost:8000/api";
+const url = "https://senko.dasischbims.social/api";
 
 // Bot Info
 
