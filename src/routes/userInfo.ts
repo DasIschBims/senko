@@ -2,16 +2,12 @@ import express from "express";
 const router = express.Router();
 import { client } from "../index";
 import profileSchmea from "../schemas/profile";
-import mongoose from "mongoose";
 
 const getNextXp = (level: number) => {
     return Math.floor(10*(level ^ 2) + (55 * level) + 100);
 }
 
 router.get("/:guildId/:userId", async (req, res) => {
-    const mongo = async () => await mongoose.connect(process.env.mongodbUri);
-
-    await mongo().then(async (db) => {
         try {
             const profile = await profileSchmea.findOne({
                 guildId: req.params.guildId,
@@ -40,10 +36,7 @@ router.get("/:guildId/:userId", async (req, res) => {
             res.status(500);
             res.json({ error: "An error occurred" });
             return;
-        } finally {
-            db.disconnect();
         }
-    })
 });
 
 export default router;
