@@ -55,18 +55,25 @@ export class ExtendedClient extends Client {
             windowMs: 3 * 60 * 1000,
             delayAfter: 12,
             delayMs: 50
-        })
+        });
 
         const apiLimitUsers = rateLimit({
             windowMs: 5 * 60 * 1000,
             max: 20
-        })
+        });
 
         const apiSpeedLimitUsers = slowDown({
             windowMs: 5 * 60 * 1000,
             delayAfter: 5,
             delayMs: 100
-        })
+        });
+
+        const imageSpeedLimit = slowDown({
+            windowMs: 1 * 60 * 1000,
+            delayAfter: 5,
+            delayMs: 20,
+            maxDelayMs: 400
+        });
 
 
         app.get("/", function (req, res) {
@@ -85,6 +92,7 @@ export class ExtendedClient extends Client {
             res.sendFile(path.resolve(__dirname + "../../images/levelchart.png"));
         });
 
+        app.use("/levelchart.png", imageSpeedLimit);
         app.use("/api/infos", apiLimitInfos, apiSpeedLimitInfos ,botInfo);
         app.use("/api/users", apiLimitUsers, apiSpeedLimitUsers , userInfo);
 

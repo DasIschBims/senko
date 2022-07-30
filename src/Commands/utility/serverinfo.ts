@@ -16,14 +16,14 @@ export default new Command({
         let bannerGIF = await interaction.guild.fetch().then(guild => guild.bannerURL({ extension: "gif", size: 4096 }));
         let bannerString = "[Link (PNG 4096x)](" + bannerPNG + ")\n[Link (JPG 4096x)](" + bannerJPG + ")\n[Link (GIF 4096x)](" + bannerGIF + ")";
         if (!bannerPNG && !bannerJPG && !bannerGIF) {
-           bannerString = "This server has no banner set.";
+            bannerString = "This server has no banner set.";
         }
 
         let splashPNG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "png", size: 4096 }));
         let splashJPG = await interaction.guild.fetch().then(guild => guild.splashURL({ extension: "jpg", size: 4096 }));
         let splashString = "[Link (PNG 4096x)](" + splashPNG + ")\n[Link (JPG 4096x)](" + splashJPG + ")";
         if (!splashPNG && !splashJPG) {
-              splashString = "This server has no splash image set.";
+            splashString = "This server has no splash image set.";
         }
 
         let emojiString: string;

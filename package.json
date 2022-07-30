@@ -1,6 +1,6 @@
 {
-  "name": "getservercount",
-  "version": "1.0.0",
+  "name": "senko",
+  "version": "1.1.0",
   "description": "",
   "main": "src/index.ts",
   "scripts": {

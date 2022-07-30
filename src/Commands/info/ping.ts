@@ -5,17 +5,19 @@ export default new Command({
     name: "ping",
     description: "Displays the bot's latency",
     run: async ({ interaction }) => {
-        interaction.followUp({ embeds: [
-            new EmbedBuilder()
-            .setColor(`#${process.env.embedColor}`)
-            .setTimestamp()
-            .addFields([
-                {
-                    name: "Pong! 🏓",
-                    value: `Ping: **${Date.now() - interaction.createdTimestamp}ms**\nAPI-Latency: **${Math.round(interaction.client.ws.ping)}ms**`,
-                    inline: true,
-                  }
-            ])
-        ]});
+        interaction.followUp({
+            embeds: [
+                new EmbedBuilder()
+                    .setColor(`#${process.env.embedColor}`)
+                    .setTimestamp()
+                    .addFields([
+                        {
+                            name: "Pong! 🏓",
+                            value: `Ping: **${Date.now() - interaction.createdTimestamp}ms**\nAPI-Latency: **${Math.round(interaction.client.ws.ping)}ms**`,
+                            inline: true,
+                        }
+                    ])
+            ]
+        });
     }
 });
