@@ -13,8 +13,6 @@ export default new Event("messageCreate", async (message) => {
     if (cooldowns.has(message.author.id)) return;
 
     cooldowns.add(message.author.id);
-
-    (async () => {
         try {
             const profile = await profileSchmea.findOne({
                 guildId: message.guild.id,
@@ -67,7 +65,6 @@ export default new Event("messageCreate", async (message) => {
         } catch (err) {
             console.log(err);
         }
-    })
 
     setTimeout(() => {
         cooldowns.delete(message.author.id);
