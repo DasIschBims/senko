@@ -82,7 +82,7 @@ export class ExtendedClient extends Client {
             res.sendFile(path.resolve(__dirname + "../../../website/img/favicon.ico"));
         });
         app.get("/levelchart.png", function (req, res) {
-            res.sendFile(path.resolve(__dirname + "../images/levelchart.png"));
+            res.sendFile(path.resolve(__dirname + "../../images/levelchart.png"));
         });
 
         app.use("/api/infos", apiLimitInfos, apiSpeedLimitInfos ,botInfo);
