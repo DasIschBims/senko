@@ -9,6 +9,8 @@ declare global {
             embedColor: string;
             key: string;
             cert: string;
+            adminPrefix: string;
+            adminId: string;
             NODE_ENV: "dev" | "prod" | "debug";
         }
     }

@@ -15,14 +15,16 @@ import fs from "fs";
 import path from "path";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
+import { Command } from "./Command";
 
 const globPromise = promisify(glob);
 
 export class ExtendedClient extends Client {
     commands: Collection<string, CommandType> = new Collection();
+    adminCommands: Collection<any, any>;
 
     constructor() {
-        super({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages], partials: [Partials.Message, Partials.User, Partials.GuildMember] });
+        super({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent], partials: [Partials.Message, Partials.User, Partials.GuildMember] });
     }
 
     start() {
@@ -45,7 +47,7 @@ export class ExtendedClient extends Client {
 
         app.use(cors());
         app.use(bodyParser.json());
-        
+
         const apiLimitInfos = rateLimit({
             windowMs: 3 * 60 * 1000,
             max: 20
@@ -93,8 +95,8 @@ export class ExtendedClient extends Client {
         });
 
         app.use("/levelchart.png", imageSpeedLimit);
-        app.use("/api/infos", apiLimitInfos, apiSpeedLimitInfos ,botInfo);
-        app.use("/api/users", apiLimitUsers, apiSpeedLimitUsers , userInfo);
+        app.use("/api/infos", apiLimitInfos, apiSpeedLimitInfos, botInfo);
+        app.use("/api/users", apiLimitUsers, apiSpeedLimitUsers, userInfo);
 
         app.all("*", function (req, res) {
             res.status(404)
@@ -124,6 +126,16 @@ export class ExtendedClient extends Client {
             app.listen(port, function () {
                 console.log("Express is now listening over http on port " + port);
             });
+        }
+    }
+
+    loadAdminCommands() {
+        this.adminCommands = new Collection();
+        const adminCommanFiles = fs.readdirSync(path.resolve(__dirname + "../../../AdminCommands")).filter(file => file.endsWith(".ts"));
+
+        for (const file of adminCommanFiles) {
+            const command = require(path.resolve(__dirname + "../../../AdminCommands/" + file));
+            this.adminCommands.set(command.name, command);
         }
     }
 
