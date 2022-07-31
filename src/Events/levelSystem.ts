@@ -3,6 +3,7 @@ import { Event } from "../structures/Event";
 import profileSchmea from "../schemas/profile";
 import { EmbedBuilder } from "discord.js";
 import getNextXp from "../Utils/Level/GetNextXp";
+import getLevelUpCoins from "../Utils/Coins/GetLevelUpCoins";
 
 const cooldowns = new Set();
 
@@ -39,6 +40,7 @@ export default new Event("messageCreate", async (message) => {
 
             if (profile.xp >= getNextXp(profile.level)) {
                 const needed = getNextXp(profile.level);
+                const coins = getLevelUpCoins(profile.level)
                 await profileSchmea.updateOne(
                     {
                         userId: message.author.id,
@@ -49,6 +51,9 @@ export default new Event("messageCreate", async (message) => {
                             xp: profile.xp - needed,
                             level: profile.level + 1,
                         },
+                        $inc: {
+                            coins: coins,
+                        },
                     }
                 );
                 message.reply({
@@ -58,6 +63,7 @@ export default new Event("messageCreate", async (message) => {
                             .setTimestamp()
                             .setTitle("You are now level " + (profile.level + 1) + "! 🎉")
                             .setImage("https://c.tenor.com/CqZZfYNz_mgAAAAC/senko-san-anime.gif")
+                            .setDescription("You have earned " + coins + " coins!")
                     ]
                 })
             }

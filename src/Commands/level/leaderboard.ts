@@ -13,7 +13,10 @@ export default new Command({
 
             const embed = new EmbedBuilder()
                 .setColor(`#${process.env.embedColor}`)
-                .setTitle("Leaderboard of " + interaction.guild.name)
+                .setAuthor({
+                    name: "Top 10 Users by Level",
+                    iconURL: interaction.guild.iconURL({ size: 2048, forceStatic: false }),
+                })
                 .setDescription(profiles.map((profile, index) => `**${index + 1}.** <@!${profile.userId}> **-> Level ${profile.level}**`).join("\n"));
 
             interaction.followUp({ embeds: [embed] });

@@ -21,7 +21,6 @@ const globPromise = promisify(glob);
 
 export class ExtendedClient extends Client {
     commands: Collection<string, CommandType> = new Collection();
-    adminCommands: Collection<any, any>;
 
     constructor() {
         super({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent], partials: [Partials.Message, Partials.User, Partials.GuildMember] });
@@ -126,16 +125,6 @@ export class ExtendedClient extends Client {
             app.listen(port, function () {
                 console.log("Express is now listening over http on port " + port);
             });
-        }
-    }
-
-    loadAdminCommands() {
-        this.adminCommands = new Collection();
-        const adminCommanFiles = fs.readdirSync(path.resolve(__dirname + "../../../AdminCommands")).filter(file => file.endsWith(".ts"));
-
-        for (const file of adminCommanFiles) {
-            const command = require(path.resolve(__dirname + "../../../AdminCommands/" + file));
-            this.adminCommands.set(command.name, command);
         }
     }
 

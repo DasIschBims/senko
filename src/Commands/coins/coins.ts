@@ -73,7 +73,7 @@ export default new Command({
                                 name: `${user.user.username}#${user.user.discriminator}`,
                                 iconURL: user.user.avatarURL({ size: 2048, forceStatic: false }),
                             })
-                            .setDescription(`**${user.user.username}** has **${profile.coins}** coins. 🪙\n__Please not that this system has not been implemented yet.__`)
+                            .setDescription(`**${user.user.username}** has **${profile.coins}** coins. 🪙\n__Please note that this system has not been fully implemented yet.__`)
                     ]
                 });
             } else {
@@ -86,7 +86,7 @@ export default new Command({
                                 name: `${interaction.user.username}#${interaction.user.discriminator}`,
                                 iconURL: interaction.user.avatarURL({ size: 2048, forceStatic: false }),
                             })
-                            .setDescription(`You have **${profile.coins}** coins. 🪙\n__Please not that this system has not been implemented yet.__`)
+                            .setDescription(`You have **${profile.coins}** coins. 🪙\n__Please note that this system has not been fully implemented yet.__`)
                     ]
                 });
             }

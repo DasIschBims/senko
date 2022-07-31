@@ -1,4 +1,3 @@
-import { client } from "..";
 import { Event } from "../structures/Event";
 
 const adminPrefix = process.env.adminPrefix;
