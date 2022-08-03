@@ -1,4 +1,4 @@
-import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver, GuildMember, PermissionResolvable } from "discord.js";
+import { ChatInputApplicationCommandData, ChatInputCommandInteraction, CommandInteractionOptionResolver, GuildMember, PermissionResolvable } from "discord.js";
 import { ExtendedClient } from "../structures/Client";
 
 /**
@@ -11,7 +11,7 @@ import { ExtendedClient } from "../structures/Client";
  * }
  */
 
-export interface ExtendedInteraction extends CommandInteraction {
+export interface ExtendedInteraction extends ChatInputCommandInteraction {
     member: GuildMember;
 }
 

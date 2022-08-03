@@ -5,7 +5,6 @@ import settingsSchema from "../../schemas/serversettings";
 export default new Command({
     name: "config",
     description: "Manage the server's configuration for the bot.",
-    userPermissions: ["Administrator"],
     options: [{
         name: "welcome-messages",
         description: "Manage the welcome messages.",
@@ -17,11 +16,13 @@ export default new Command({
             options: [{
                 name: "channel",
                 description: "Set the channel to send the welcome messages to.",
-                type: ApplicationCommandOptionType.String,
+                type: ApplicationCommandOptionType.Channel,
+                required: true,
             }, {
                 name: "message",
                 description: "Set the welcome message.",
                 type: ApplicationCommandOptionType.String,
+                required: true,
             }],
         },
         {
@@ -41,11 +42,13 @@ export default new Command({
             options: [{
                 name: "channel",
                 description: "Set the channel to send the leave messages to.",
-                type: ApplicationCommandOptionType.String,
+                type: ApplicationCommandOptionType.Channel,
+                required: true,
             }, {
                 name: "message",
                 description: "Set the leave message.",
                 type: ApplicationCommandOptionType.String,
+                required: true,
             }],
         },
         {
@@ -56,6 +59,15 @@ export default new Command({
     }],
     run: async ({ interaction }) => {
         try {
+            if (!interaction.member.permissions.has("Administrator")) return interaction.followUp({
+                embeds: [
+                    new EmbedBuilder()
+                        .setDescription("**You do not have permission to use this command.**")
+                        .setColor("#ff0000")
+                        .setFooter({ text: "You need Administrator permissions to use this command." })
+                ]
+            })
+
             const settings = await settingsSchema.findOne({
                 guildId: interaction.guild.id,
             });
@@ -73,12 +85,73 @@ export default new Command({
                 })
             }
 
-            const welcomeMessage = settings.welcomeMessage;
-            const leaveMessage = settings.leaveMessage;
-            const welcomeChannel = settings.welcomeChannel;
-            const leaveChannel = settings.leaveChannel;
+            if (interaction.options.getSubcommandGroup() === "welcome-messages") {
+                if (interaction.options.getSubcommand() === "set") {
+                    if (interaction.options.getChannel("channel") && interaction.options.getString("message")) {
+                        await settings.updateOne({
+                            welcomeChannel: interaction.options.getChannel("channel").id,
+                            welcomeMessage: interaction.options.getString("message"),
+                        });
+                        await settings.save();
+                        return interaction.followUp({
+                            embeds: [
+                                new EmbedBuilder()
+                                    .setTitle("Configuration")
+                                    .setDescription("Welcome message and channel set.")
+                                    .setColor(`#${process.env.embedColor}`)
+                            ]
+                        })
+                    }
+                } else if (interaction.options.getSubcommand() === "clear") {
+                    await settings.updateOne({
+                        welcomeChannel: "none",
+                        welcomeMessage: "none",
+                    });
+                    await settings.save();
+                    return interaction.followUp({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setTitle("Configuration")
+                                .setDescription("Welcome messagea and channel cleared.")
+                                .setColor(`#${process.env.embedColor}`)
+                        ]
+                    })
+                }
+            }
 
-
+            if (interaction.options.getSubcommandGroup() === "leave-messages") {
+                if (interaction.options.getSubcommand() === "set") {
+                    if (interaction.options.getChannel("channel") && interaction.options.getString("message")) {
+                        await settings.updateOne({
+                            leaveChannel: interaction.options.getChannel("channel").id,
+                            leaveMessage: interaction.options.getString("message"),
+                        });
+                        await settings.save();
+                        return interaction.followUp({
+                            embeds: [
+                                new EmbedBuilder()
+                                    .setTitle("Configuration")
+                                    .setDescription("Leave message and channel set.")
+                                    .setColor(`#${process.env.embedColor}`)
+                            ]
+                        })
+                    }
+                } else if (interaction.options.getSubcommand() === "clear") {
+                    await settings.updateOne({
+                        leaveChannel: "none",
+                        leaveMessage: "none",
+                    });
+                    await settings.save();
+                    return interaction.followUp({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setTitle("Configuration")
+                                .setDescription("Leave message and channel cleared.")
+                                .setColor(`#${process.env.embedColor}`)
+                        ]
+                    })
+                }
+            }
         } catch (err) {
             console.log(err);
         }
