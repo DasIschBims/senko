@@ -76,19 +76,6 @@ export class ExtendedClient extends Client {
             maxDelayMs: 400
         });
 
-
-        app.get("/", function (req, res) {
-            res.sendFile(path.resolve(__dirname + "../../../website/index.html"))
-        });
-        app.get("/css/style.css", function (req, res) {
-            res.sendFile(path.resolve(__dirname + "../../../website/css/style.css"));
-        });
-        app.get("/js/index.js", function (req, res) {
-            res.sendFile(path.resolve(__dirname + "../../../website/js/index.js"));
-        });
-        app.get("/img/favicon.ico", function (req, res) {
-            res.sendFile(path.resolve(__dirname + "../../../website/img/favicon.ico"));
-        });
         app.get("/levelchart.png", function (req, res) {
             res.sendFile(path.resolve(__dirname + "../../images/levelchart.png"));
         });
@@ -99,7 +86,6 @@ export class ExtendedClient extends Client {
 
         app.all("*", function (req, res) {
             res.status(404)
-            res.redirect("/")
         })
 
         app.use(function (req, res) {
