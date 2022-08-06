@@ -20,7 +20,7 @@ export default new Command({
                 required: true,
             }, {
                 name: "message",
-                description: "Set the welcome message.",
+                description: "Set the welcome message. Use {user} to insert the user's name, {usermention} to insert the user's mention, and {guild} to insert the server's name.",
                 type: ApplicationCommandOptionType.String,
                 required: true,
             }],
@@ -46,7 +46,7 @@ export default new Command({
                 required: true,
             }, {
                 name: "message",
-                description: "Set the leave message.",
+                description: "Set the leave message. Use {user} to insert the user's name, {usermention} to insert the user's mention, and {guild} to insert the server's name.",
                 type: ApplicationCommandOptionType.String,
                 required: true,
             }],
