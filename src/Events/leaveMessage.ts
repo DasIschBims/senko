@@ -16,10 +16,10 @@ export default new Event("guildMemberRemove", async (event) => {
             });
         }
 
-        if (settings.leaveChannel == "none") return;
+        if (!settings.leaveChannel) return;
 
         const channel = guild.channels.cache.get(settings.leaveChannel);
-        if (!channel) return;
+        if (!channel) return await settingSchema.updateOne({ guildId: guild.id }, { leaveChannel: null });
         if (client.guilds.cache.get(guild.id)?.channels.cache.get(channel.id).type !== ChannelType.GuildText) return;
 
         const leaveMessage = settings.leaveMessage.replace("{user}", member.username).replace("{guild}", guild.name).replace("{usermention}", `<@${member.id}>`);

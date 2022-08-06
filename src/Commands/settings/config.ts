@@ -104,8 +104,7 @@ export default new Command({
                     }
                 } else if (interaction.options.getSubcommand() === "clear") {
                     await settings.updateOne({
-                        welcomeChannel: "none",
-                        welcomeMessage: "none",
+                        welcomeChannel: null,
                     });
                     await settings.save();
                     return interaction.followUp({
@@ -138,8 +137,7 @@ export default new Command({
                     }
                 } else if (interaction.options.getSubcommand() === "clear") {
                     await settings.updateOne({
-                        leaveChannel: "none",
-                        leaveMessage: "none",
+                        leaveChannel: null,
                     });
                     await settings.save();
                     return interaction.followUp({

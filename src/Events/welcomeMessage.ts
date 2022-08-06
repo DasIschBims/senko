@@ -16,10 +16,10 @@ export default new Event("guildMemberAdd", async (event) => {
             });
         }
 
-        if (settings.welcomeChannel == "none") return;
+        if (!settings.welcomeChannel) return;
 
         const channel = guild.channels.cache.get(settings.welcomeChannel);
-        if (!channel) return;
+        if (!channel) return await settingSchema.updateOne({ guildId: guild.id }, { welcomeChannel: null });
         if (client.guilds.cache.get(guild.id)?.channels.cache.get(channel.id).type !== ChannelType.GuildText) return;
 
         const welcomeMessage = settings.welcomeMessage.replace("{user}", member.username).replace("{guild}", guild.name).replace("{usermention}", `<@${member.id}>`);

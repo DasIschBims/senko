@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     },
     welcomeChannel: {
         type: String,
-        default: "none",
+        default: null,
     },
     welcomeMessage: {
         type: String,
@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
     },
     leaveChannel: {
         type: String,
-        default: "none",
+        default: null,
     },
     leaveMessage: {
         type: String,
