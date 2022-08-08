@@ -13,7 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/opus": "^0.8.0",
     "@discordjs/rest": "^1.0.0",
+    "@discordjs/voice": "^0.11.0",
     "@types/glob": "^7.2.0",
     "@types/node": "^18.0.6",
     "cors": "^2.8.5",
@@ -23,8 +25,14 @@
     "express": "^4.18.1",
     "express-rate-limit": "^6.5.1",
     "express-slow-down": "^1.4.0",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^5.0.2",
+    "i": "^0.3.7",
     "mongoose": "^6.4.6",
-    "ts-node-dev": "^2.0.0"
+    "npm": "^8.16.0",
+    "ts-node-dev": "^2.0.0",
+    "ytdl-core": "^4.11.0",
+    "ytsr": "^3.8.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
