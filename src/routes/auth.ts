@@ -7,6 +7,11 @@ router.get("/", passportStrat.authenticate("discord"), (req, res) => {
 });
 
 router.get("/redirect", passportStrat.authenticate("discord"), (req, res) => {
+    res.redirect("http://localhost:3000/guilds");
+});
+
+router.get("/status", (req, res) => {
+    console.log(req.headers);
     res.sendStatus(200);
 })
 

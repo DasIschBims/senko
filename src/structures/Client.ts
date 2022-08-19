@@ -16,9 +16,9 @@ import fs from "fs";
 import path from "path";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
-import { Command } from "./Command";
 import session from "express-session";
 let MongoStoreSession = require("connect-mongodb-session")(session);
+import passport from "passport";
 
 const globPromise = promisify(glob);
 
@@ -114,8 +114,12 @@ export class ExtendedClient extends Client {
             store: store,
         }));
 
+        app.use(passport.initialize());
+        app.use(passport.session());
+
         app.use("/api/auth/discord", auth);
         app.use("/api/auth/discord/redirect", auth);
+        app.use("/api/auth/discord/status", auth);
 
         app.use("/api/users", apiLimitUsers, apiSpeedLimitUsers, userInfo);
 
