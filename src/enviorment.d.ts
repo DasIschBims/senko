@@ -2,7 +2,7 @@ declare global {
     namespace NodeJS {
         interface ProcessEnv {
             botToken: string;
-            botId: string;
+            clientId: string;
             guildId: string;
             mongodbUri: string;
             port: number;
@@ -12,6 +12,9 @@ declare global {
             adminPrefix: string;
             adminId: string;
             NODE_ENV: "dev" | "prod" | "debug";
+            clientSecret: string;
+            redirectURL: string;
+            cookieSecret: string;
         }
     }
     declare module "*.png" {

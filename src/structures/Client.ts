@@ -8,6 +8,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import botInfo from "../routes/botInfo";
 import userInfo from "../routes/userInfo";
+import auth from "../routes/auth";
 import mongoose from "mongoose";
 import cors from "cors";
 import https from "https";
@@ -16,6 +17,8 @@ import path from "path";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import { Command } from "./Command";
+import session from "express-session";
+let MongoStoreSession = require("connect-mongodb-session")(session);
 
 const globPromise = promisify(glob);
 
@@ -95,6 +98,25 @@ export class ExtendedClient extends Client {
 
         app.use("/levelchart.png", imageSpeedLimit);
         app.use("/api/infos", apiLimitInfos, apiSpeedLimitInfos, botInfo);
+
+        let store = new MongoStoreSession({
+            uri: process.env.mongodbUri,
+            collection: "sessions"
+        })
+
+        app.use(session({
+            secret: process.env.cookieSecret,
+            resave: true,
+            saveUninitialized: true,
+            cookie: {
+                maxAge: 1000 * 60 * 60 * 24 * 7,
+            },
+            store: store,
+        }));
+
+        app.use("/api/auth/discord", auth);
+        app.use("/api/auth/discord/redirect", auth);
+
         app.use("/api/users", apiLimitUsers, apiSpeedLimitUsers, userInfo);
 
         app.all("*", function (req, res) {
