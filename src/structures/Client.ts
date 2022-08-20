@@ -17,8 +17,8 @@ import path from "path";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import session from "express-session";
-let MongoStoreSession = require("connect-mongodb-session")(session);
 import passport from "passport";
+import MongoStore from "connect-mongo";
 
 const globPromise = promisify(glob);
 
@@ -99,11 +99,6 @@ export class ExtendedClient extends Client {
         app.use("/levelchart.png", imageSpeedLimit);
         app.use("/api/infos", apiLimitInfos, apiSpeedLimitInfos, botInfo);
 
-        let store = new MongoStoreSession({
-            uri: process.env.mongodbUri,
-            collection: "sessions"
-        })
-
         app.use(session({
             secret: process.env.cookieSecret,
             resave: true,
@@ -111,8 +106,17 @@ export class ExtendedClient extends Client {
             cookie: {
                 maxAge: 1000 * 60 * 60 * 24 * 7,
             },
-            store: store,
+            store: new MongoStore({
+                mongoUrl: process.env.mongodbUri,
+            }),
         }));
+
+        app.use(cors(
+            {
+                origin: "http://localhost:3000",
+                credentials: true,
+            }
+        ));
 
         app.use(passport.initialize());
         app.use(passport.session());

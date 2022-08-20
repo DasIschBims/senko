@@ -17,6 +17,7 @@ declare global {
             cookieSecret: string;
         }
     }
+
     declare module "*.png" {
         const value: any;
         export = value;

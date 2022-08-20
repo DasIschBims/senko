@@ -27,8 +27,16 @@ const passportStrat = passport.use(new Strategy({
         if (!user) {
             let user = await DiscordUserSchema.create({
                 id: profile.id,
+                accessToken,
+                refreshToken,
             });
 
+            return done(null, user);
+        } else if (user.accessToken !== accessToken && user.refreshToken !== refreshToken) {
+            let user = await DiscordUserSchema.findOneAndUpdate({ id: profile.id }, {
+                accessToken,
+                refreshToken,
+            });
             return done(null, user);
         } else {
             return done(null, user);
