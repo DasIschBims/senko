@@ -26,7 +26,7 @@ npm build
 
 > 4.5 (linux only)
 ```bash
-chmod 777 start.sh
+chmod +x start.sh
 ```
 
 
