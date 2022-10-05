@@ -30,7 +30,7 @@ chmod +x start.sh
 ```
 
 
-> 5 (linux/bash only)
+> 5 (linux)
 ```bash
 ./start.sh
 ```
