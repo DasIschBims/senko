@@ -28,7 +28,7 @@ export class ExtendedClient extends Client {
 
     start() {
         this.registerModules();
-        this.express();
+        // this.express();
         this.mongodb();
         this.login(process.env.botToken);
     }
